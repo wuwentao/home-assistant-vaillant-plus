@@ -31,7 +31,7 @@ PRESET_WINTER = "Winter"
 SUPPORTED_FEATURES = (
     ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.PRESET_MODE
 )
-SUPPORTED_HVAC_MODES = [HVACMode.HEAT, HVACMode.OFF]
+SUPPORTED_HVAC_MODES = [HVACMode.HEAT, HVACMode.OFF, HVACMode.AUTO]
 SUPPORTED_PRESET_MODES = [PRESET_COMFORT]
 
 
@@ -128,8 +128,14 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
 
         # TODO whether support HVACMode.AUTO
         if self.get_device_attr("Enabled_Heating") == 1:
-            return HVACMode.HEAT
-
+            # 全天候
+            if self.get_device_attr("Mode_Setting_CH") == "Cruising":
+                return HVACMode.HEAT
+            # 定时
+            elif self.get_device_attr("Mode_Setting_CH") == "Auto":
+                return HVACMode.AUTO
+            else:
+                return HVACMode.HEAT
         return HVACMode.OFF
 
     @property
@@ -142,9 +148,10 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
             return HVACAction.OFF
 
         try:
-            if self.get_device_attr("Room_Temperature") < self.get_device_attr(
-                "Room_Temperature_Setpoint_Comfort"
-            ):
+            #if self.get_device_attr("Room_Temperature") < self.get_device_attr(
+            #    "Room_Temperature_Setpoint_Comfort"
+            #):
+            if self.get_device_attr("Enabled_Heating"):
                 return HVACAction.HEATING
         except TypeError:
             pass
@@ -168,14 +175,22 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
 
         _LOGGER.debug("Setting HVAC mode to: %s", hvac_mode)
 
+
         if hvac_mode == HVACMode.OFF:
             await self._client.control_device({
                 "Heating_Enable": False,
             })
+        # Cruising 全天候， Auto 定时模式
         elif hvac_mode == HVACMode.HEAT:
             await self._client.control_device({
                 "Heating_Enable": True,
                 "Mode_Setting_CH": "Cruising",
+            })
+        # Cruising 全天候， Auto 定时模式
+        elif hvac_mode == HVACMode.AUTO:
+            await self._client.control_device({
+                "Heating_Enable": True,
+                "Mode_Setting_CH": "Auto",
             })
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:

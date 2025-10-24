@@ -60,14 +60,14 @@ BINARY_SENSOR_DESCRIPTIONS = (
     ),
     VaillantBinarySensorDescription(
         key="Enabled_Heating",
-        name="Heating boiler",
+        name="Enabled CH",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
     ),
     VaillantBinarySensorDescription(
         key="Enabled_DHW",
-        name="Domestic hot water",
+        name="Enabled DHW",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
@@ -81,7 +81,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     ),
     VaillantBinarySensorDescription(
         key="Weather_compensation",
-        name="Weather compensation",
+        name="CH Weather compensation",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
