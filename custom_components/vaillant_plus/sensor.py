@@ -12,6 +12,7 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.const import UnitOfTemperature
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -25,87 +26,225 @@ _LOGGER = logging.getLogger(__name__)
 SENSOR_DESCRIPTIONS = (
     SensorEntityDescription(
         key="Room_Temperature_Setpoint_Comfort",
-        name="Room temperature setpoint of comfort mode",
+        name="CH temperature room setpoint comfort mode",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Room_Temperature_Setpoint_ECO",
-        name="Room temperature setpoint of ECO mode",
+        name="CH temperature room setpoint ECO mode",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Outdoor_Temperature",
-        name="Outdoor temperature",
+        name="CH temperature outdoor",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Room_Temperature",
-        name="Room temperature",
+        name="CH temperature room",
         device_class=SensorDeviceClass.TEMPERATURE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="DHW_setpoint",
-        name="Domestic hot water setpoint",
-        device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Lower_Limitation_of_CH_Setpoint",
-        name="Lower limitation of central heating setpoint",
+        name="CH temperature setpoint Lower",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Upper_Limitation_of_CH_Setpoint",
-        name="Upper limitation of central heating setpoint",
+        name="CH temperature setpoint Upper",
         device_class=SensorDeviceClass.TEMPERATURE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="Lower_Limitation_of_DHW_Setpoint",
-        name="Lower limitation of domestic hot water",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="Upper_Limitation_of_DHW_Setpoint",
-        name="Upper limitation of domestic hot water",
-        device_class=SensorDeviceClass.TEMPERATURE,
-        state_class=SensorStateClass.MEASUREMENT,
-    ),
-    SensorEntityDescription(
-        key="Current_DHW_Setpoint",
-        name="Current domestic hot water setpoint",
-        device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Flow_Temperature_Setpoint",
-        name="Flow temperature setpoint",
+        name="CH temperature flow setpoint",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Flow_temperature",
-        name="Flow temperature",
+        name="CH temperature flow current",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="return_temperature",
-        name="Return flow temperature",
+        name="CH temperature flow return",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
     ),
     SensorEntityDescription(
         key="Tank_temperature",
         name="Water tank temperature",
         device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="DHW_setpoint",
+        name="DHW temperature setpoint",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="Lower_Limitation_of_DHW_Setpoint",
+        name="DHW temperature setpoint Lower",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="Upper_Limitation_of_DHW_Setpoint",
+        name="DHW temperature setpoint Upper",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="Current_DHW_Setpoint",
+        name="DHW temperature sepoint Current",
+        device_class=SensorDeviceClass.TEMPERATURE,
+        unit_of_measurement =UnitOfTemperature.CELSIUS,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    SensorEntityDescription(
+        key="Heating_System_Setting",
+        name="CH Heating System Setting",
+    ),
+    SensorEntityDescription(
+        key="Time_slot_type",
+        name="Time Slot Type",
+    ),
+    SensorEntityDescription(
+        key="Slot_current_CH",
+        name="CH Slot Current",
+    ),
+    SensorEntityDescription(
+        key="Slot_current_DHW",
+        name="DHW Slot Current",
+    ),
+    SensorEntityDescription(
+        key="Heating_Curve",
+        name="CH Heating Curve",
+    ),
+    SensorEntityDescription(
+        key="Mode_Setting_DHW",
+        name="DHW Mode Setting",
+    ),
+    SensorEntityDescription(
+        key="Mode_Setting_CH",
+        name="CH Mode Setting",
+    ),
+    SensorEntityDescription(
+        key="DHW_Function",
+        name="DHW Function",
+    ),
+    SensorEntityDescription(
+        key="Max_NumBer_Of_Timeslots_CH",
+        name="CH Max Timeslots",
+    ),
+    SensorEntityDescription(
+        key="Max_NumBer_Of_Timeslots_DHW",
+        name="DHW Max Timeslots",
+    ),
+    SensorEntityDescription(
+        key="reserved_data1",
+        name="Reserved data1",
+    ),
+    SensorEntityDescription(
+        key="reserved_data2",
+        name="Reserved data2",
+    ),
+    SensorEntityDescription(
+        key="reserved_data3",
+        name="Reserved data3",
+    ),
+    SensorEntityDescription(
+        key="Fault_List",
+        name="Fault List",
+    ),
+    SensorEntityDescription(
+        key="Maintenance",
+        name="Maintenance",
+    ),
+    SensorEntityDescription(
+        key="Brand",
+        name="Brand",
+    ),
+    SensorEntityDescription(
+        key="DSN",
+        name="DSN",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW1",
+        name="DHW Start Time 1",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW2",
+        name="DHW Start Time 2",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW3",
+        name="DHW Start Time 3",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW4",
+        name="DHW Start Time 4",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW5",
+        name="DHW Start Time 5",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW6",
+        name="DHW Start Time 6",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_DHW7",
+        name="DHW Start Time 7",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH1",
+        name="CH Start Time 1",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH2",
+        name="CH Start Time 2",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH3",
+        name="CH Start Time 3",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH4",
+        name="CH Start Time 4",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH5",
+        name="CH Start Time 5",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH6",
+        name="CH Start Time 6",
+    ),
+    SensorEntityDescription(
+        key="Start_Time_CH7",
+        name="CH Start Time 7",
     ),
 )
 
@@ -155,6 +294,8 @@ class VaillantSensorEntity(VaillantEntity, SensorEntity):
     ):
         super().__init__(client)
         self.entity_description = description
+        # set native_unit_of_measurement
+        self._attr_native_unit_of_measurement = description.unit_of_measurement
 
     @property
     def unique_id(self) -> str | None:
@@ -166,5 +307,8 @@ class VaillantSensorEntity(VaillantEntity, SensorEntity):
         """Update the entity from the latest data."""
 
         value = data.get(self.entity_description.key)
+        # Converted Tank_temperature from %s°F to %s°C
+        if self.entity_description.key == "Tank_temperature" and value is not None:
+            value = (value - 32) * 5 / 9
         self._attr_native_value = value
         self._attr_available = value is not None
