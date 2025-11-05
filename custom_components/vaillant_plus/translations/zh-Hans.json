@@ -1,0 +1,180 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "设备已经注册"
+    },
+    "error": {
+      "cannot_connect": "无法连接服务器",
+      "invalid_auth": "验证失败",
+      "unknown": "位置错误"
+    },
+    "step": {
+      "user": {
+        "data": {
+          "host": "主机",
+          "password": "密码",
+          "username": "用户名"
+        }
+      },
+      "select": {
+        "data": {
+          "select_device": "威能设备"
+        },
+        "description": "选择威能壁挂炉完成设置"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "circulation": {
+        "name": "Circulation"
+      },
+      "heating_enable": {
+        "name": "燃气采暖状态"
+      },
+      "enabled_heating": {
+        "name": "燃气采暖开关"
+      },
+      "enabled_dhw": {
+        "name": "生活热水开关"
+      },
+      "bmu_platform": {
+        "name": "BMU Platform"
+      },
+      "ch_weather_compensation": {
+        "name": "采暖气候补偿"
+      },
+      "warmstar_tank_loading": {
+        "name": "生活热水状态"
+      },
+      "ebus_status": {
+        "name": "Ebus状态"
+      },
+      "boiler_heating_demand": {
+        "name": "Boiler Heating Demand"
+      },
+      "boiler_need_refill_water": {
+        "name": "Boiler Need Refill Water"
+      }
+    },
+    "sensor": {
+      "ch_temperature_set_room_comfort": {
+        "name": "采暖温度设置Comfort"
+      },
+      "ch_temperature_set_room_eco": {
+        "name": "采暖温度设置ECO"
+      },
+      "ch_temperature_outdoor": {
+        "name": "室外气温"
+      },
+      "ch_temperature_room": {
+        "name": "室内气温"
+      },
+      "ch_temperature_set_lower": {
+        "name": "采暖水温设置下限"
+      },
+      "ch_temperature_set_upper": {
+        "name": "采暖水温设置上限"
+      },
+      "ch_temperature_flow_set": {
+        "name": "采暖水温设置"
+      },
+      "temperature_flow_current": {
+        "name": "当前水温"
+      },
+      "temperature_flow_return": {
+        "name": "回水温度"
+      },
+      "temperature_tank": {
+        "name": "水箱温度"
+      },
+      "dhw_temperature_set": {
+        "name": "生活热水设置温度"
+      },
+      "dhw_temperature_set_lower": {
+        "name": "生活热水设置温度下限"
+      },
+      "dhw_temperature_set_upper": {
+        "name": "生活热水设置温度上限"
+      },
+      "dhw_temperature_set_current": {
+        "name": "生活热水当前设置温度"
+      },
+      "ch_heating_system_setting": {
+        "name": "采暖系统设置",
+        "state": {
+          "floor_heating": "地暖"
+        }
+      },
+      "time_slot_type": {
+        "name": "Time Slot Type",
+        "state": {
+          "CH": "采暖"
+        }
+      },
+      "ch_slot_current": {
+        "name": "ch_slot_current"
+      },
+      "dhw_slot_current": {
+        "name": "dhw_slot_current"
+      },
+      "ch_heating_curve": {
+        "name": "采暖气候补偿"
+      },
+      "dhw_mode_setting": {
+        "name": "生活热水模式设置",
+        "state": {
+          "Auto": "定时",
+          "Cruising": "全天候"
+        }
+      },
+      "ch_mode_setting": {
+        "name": "采暖模式设置",
+        "state": {
+          "Auto": "定时",
+          "Cruising": "全天候"
+        }
+      },
+      "dhw_function": {
+        "name": "DHW Function"
+      },
+      "ch_max_timeslots": {
+        "name": "ch_max_timeslots"
+      },
+      "dhw_max_timeslots": {
+        "name": "dhw_max_timeslots"
+      },
+      "ch_water_pressure": {
+        "name": "采暖水压"
+      },
+      "reserved_data2": {
+        "name": "reserved_data2"
+      },
+      "reserved_data3": {
+        "name": "reserved_data3"
+      },
+      "fault_list": {
+        "name": "Fault List"
+      },
+      "maintenance": {
+        "name": "maintenance"
+      },
+      "brand": {
+        "name": "Brand"
+      },
+      "dsn": {
+        "name": "DSN"
+      }
+    },
+    "climate": {
+      "heating": {
+        "name": "燃气采暖"
+      }
+    },
+    "water_heater": {
+      "dhw": {
+        "name": "生活热水"
+      }
+    }
+  }
+}

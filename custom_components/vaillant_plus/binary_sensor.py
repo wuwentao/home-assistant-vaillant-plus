@@ -40,20 +40,23 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="Circulation_Enable",
         name="Circulation",
+        translation_key="circulation",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
     ),
     VaillantBinarySensorDescription(
         key="Heating_Enable",
-        name="Heating",
+        name="Heating Enable",
+        translation_key="heating_enable",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
     ),
     VaillantBinarySensorDescription(
         key="WarmStar_Tank_Loading_Enable",
-        name="WarmStar tank loading",
+        name="WarmStar Tank Loading",
+        translation_key="warmstar_tank_loading",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
@@ -61,6 +64,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="Enabled_Heating",
         name="Enabled CH",
+        translation_key="enabled_heating",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
@@ -68,6 +72,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="Enabled_DHW",
         name="Enabled DHW",
+        translation_key="enabled_dhw",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
@@ -75,6 +80,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="BMU_Platform",
         name="BMU platform",
+        translation_key="bmu_platform",
         # device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
@@ -82,6 +88,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="Weather_compensation",
         name="CH Weather compensation",
+        translation_key="ch_weather_compensation",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=1,
@@ -89,6 +96,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="RF_Status",
         name="EBus status",
+        translation_key="ebus_status",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=3,
@@ -96,6 +104,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="Boiler_info3_bit0",
         name="Boiler heating demand",
+        translation_key="boiler_heating_demand",
         device_class=BinarySensorDeviceClass.RUNNING,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=True,
@@ -103,6 +112,7 @@ BINARY_SENSOR_DESCRIPTIONS = (
     VaillantBinarySensorDescription(
         key="Boiler_info5_bit4",
         name="Boiler need refill water",
+        translation_key="boiler_need_refill_water",
         device_class=BinarySensorDeviceClass.PROBLEM,
         entity_category=EntityCategory.DIAGNOSTIC,
         on_state=True,
@@ -115,9 +125,7 @@ async def async_setup_entry(
 ) -> bool:
     """Set up Vaillant binary sensors."""
     device_id = entry.data.get(CONF_DID)
-    client: VaillantClient = hass.data[DOMAIN][API_CLIENT][
-        entry.entry_id
-    ]
+    client: VaillantClient = hass.data[DOMAIN][API_CLIENT][entry.entry_id]
 
     added_entities = []
 

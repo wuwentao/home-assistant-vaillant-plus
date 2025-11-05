@@ -1,4 +1,5 @@
 """Vaillant vSMART entity classes."""
+
 from datetime import timedelta
 import logging
 from typing import Any
@@ -25,6 +26,7 @@ class VaillantEntity(Entity):
     ):
         """Initialize."""
         self._client = client
+        self._attr_has_entity_name = True
 
     @property
     def device_attrs(self) -> dict[str, Any]:
@@ -81,6 +83,4 @@ class VaillantEntity(Entity):
 
     async def send_command(self, attr: str, value: Any) -> None:
         """Send operations to cloud."""
-        await self._client.control_device({
-            f"{attr}": value
-        })
+        await self._client.control_device({f"{attr}": value})

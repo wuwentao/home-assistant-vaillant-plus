@@ -5,6 +5,7 @@ User writes values like "07:00-09:00, 18:00-22:00" (up to 3 slots).
 The code encodes/decodes to/from the device 24-character hex format
 (each slot = 8 hex chars; "00000000" means unused slot).
 """
+
 from __future__ import annotations
 
 import logging
@@ -116,9 +117,13 @@ class VaillantTimeTextEntity(VaillantEntity, TextEntity):
                     em = int(slot[6:8], 16)
                     formatted_times.append(f"{sh:02d}:{sm:02d}-{eh:02d}:{em:02d}")
                 except Exception as exc:
-                    _LOGGER.warning("Failed to parse timeslot %s for %s: %s", slot, self._key, exc)
+                    _LOGGER.warning(
+                        "Failed to parse timeslot %s for %s: %s", slot, self._key, exc
+                    )
                     continue
-            self._attr_native_value = ", ".join(formatted_times) if formatted_times else "0"
+            self._attr_native_value = (
+                ", ".join(formatted_times) if formatted_times else "0"
+            )
             self._attr_available = True
         else:
             # if device didn't provide the key or invalid format
@@ -166,7 +171,9 @@ class VaillantTimeTextEntity(VaillantEntity, TextEntity):
 
         # update local displayed value to reflect what we sent
         if slots:
-            self._attr_native_value = ", ".join(f"{s[0]:02d}:{s[1]:02d}-{s[2]:02d}:{s[3]:02d}" for s in slots)
+            self._attr_native_value = ", ".join(
+                f"{s[0]:02d}:{s[1]:02d}-{s[2]:02d}:{s[3]:02d}" for s in slots
+            )
         else:
             self._attr_native_value = "0"
 
@@ -186,7 +193,10 @@ async def async_setup_entry(
 
     @callback
     def async_new_time_entities(device_attrs: dict[str, Any]):
-        _LOGGER.debug("add vaillant time entities. device attrs keys: %s", list(device_attrs.keys()))
+        _LOGGER.debug(
+            "add vaillant time entities. device attrs keys: %s",
+            list(device_attrs.keys()),
+        )
         new_entities: List[VaillantTimeTextEntity] = []
         for key, friendly_name in CH_START_KEYS:
             if key in device_attrs and key not in added_keys:
@@ -196,7 +206,9 @@ async def async_setup_entry(
         if new_entities:
             async_add_entities(new_entities)
 
-    unsub = async_dispatcher_connect(hass, EVT_DEVICE_CONNECTED.format(device_id), async_new_time_entities)
+    unsub = async_dispatcher_connect(
+        hass, EVT_DEVICE_CONNECTED.format(device_id), async_new_time_entities
+    )
     hass.data[DOMAIN][DISPATCHERS][device_id].append(unsub)
 
     return True
