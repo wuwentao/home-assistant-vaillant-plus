@@ -1,4 +1,5 @@
 """The Vaillant Plus climate platform."""
+
 from __future__ import annotations
 
 import logging
@@ -25,14 +26,9 @@ _LOGGER = logging.getLogger(__name__)
 
 DEFAULT_TEMPERATURE_INCREASE = 0.5
 
-PRESET_SUMMER = "Summer"
-PRESET_WINTER = "Winter"
 
-SUPPORTED_FEATURES = (
-    ClimateEntityFeature.TARGET_TEMPERATURE | ClimateEntityFeature.PRESET_MODE
-)
+SUPPORTED_FEATURES = ClimateEntityFeature.TARGET_TEMPERATURE
 SUPPORTED_HVAC_MODES = [HVACMode.HEAT, HVACMode.OFF, HVACMode.AUTO]
-SUPPORTED_PRESET_MODES = [PRESET_COMFORT]
 
 
 async def async_setup_entry(
@@ -41,9 +37,7 @@ async def async_setup_entry(
     """Set up Vaillant devices from a config entry."""
 
     device_id = entry.data.get(CONF_DID)
-    client: VaillantClient = hass.data[DOMAIN][API_CLIENT][
-        entry.entry_id
-    ]
+    client: VaillantClient = hass.data[DOMAIN][API_CLIENT][entry.entry_id]
 
     added_entities = []
 
@@ -73,6 +67,8 @@ async def async_setup_entry(
 
 class VaillantClimate(VaillantEntity, ClimateEntity):
     """Vaillant vSMART Climate."""
+
+    _attr_translation_key = "heating"
 
     @property
     def should_poll(self) -> bool:
@@ -115,6 +111,26 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
         return self.get_device_attr("Room_Temperature_Setpoint_Comfort")
 
     @property
+    def min_temp(self) -> float | None:
+        """Return the minimum temperature."""
+        return self.get_device_attr("Lower_Limitation_of_CH_Setpoint")
+
+    @property
+    def max_temp(self) -> float | None:
+        """Return the maximum temperature."""
+        return self.get_device_attr("Upper_Limitation_of_CH_Setpoint")
+
+    @property
+    def target_temperature_high(self) -> float | None:
+        """Return the highbound target temperature we try to reach."""
+        return self.get_device_attr("Upper_Limitation_of_CH_Setpoint")
+
+    @property
+    def target_temperature_low(self) -> float | None:
+        """Return the lowbound target temperature we try to reach."""
+        return self.get_device_attr("Lower_Limitation_of_CH_Setpoint")
+
+    @property
     def hvac_modes(self) -> list[HVACMode]:
         """Return the list of available HVAC operation modes."""
 
@@ -148,9 +164,9 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
             return HVACAction.OFF
 
         try:
-            #if self.get_device_attr("Room_Temperature") < self.get_device_attr(
+            # if self.get_device_attr("Room_Temperature") < self.get_device_attr(
             #    "Room_Temperature_Setpoint_Comfort"
-            #):
+            # ):
             if self.get_device_attr("Enabled_Heating"):
                 return HVACAction.HEATING
         except TypeError:
@@ -158,40 +174,33 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
 
         return HVACAction.IDLE
 
-    @property
-    def preset_modes(self) -> list[str]:
-        """Return the list of available HVAC preset modes."""
-
-        return SUPPORTED_PRESET_MODES
-
-    @property
-    def preset_mode(self) -> str:
-        """Return the currently selected HVAC preset mode."""
-
-        return PRESET_COMFORT
-
     async def async_set_hvac_mode(self, hvac_mode: HVACMode) -> None:
         """Select new HVAC operation mode."""
 
         _LOGGER.debug("Setting HVAC mode to: %s", hvac_mode)
 
-
         if hvac_mode == HVACMode.OFF:
-            await self._client.control_device({
-                "Heating_Enable": False,
-            })
+            await self._client.control_device(
+                {
+                    "Heating_Enable": False,
+                }
+            )
         # Cruising 全天候， Auto 定时模式
         elif hvac_mode == HVACMode.HEAT:
-            await self._client.control_device({
-                "Heating_Enable": True,
-                "Mode_Setting_CH": "Cruising",
-            })
+            await self._client.control_device(
+                {
+                    "Heating_Enable": True,
+                    "Mode_Setting_CH": "Cruising",
+                }
+            )
         # Cruising 全天候， Auto 定时模式
         elif hvac_mode == HVACMode.AUTO:
-            await self._client.control_device({
-                "Heating_Enable": True,
-                "Mode_Setting_CH": "Auto",
-            })
+            await self._client.control_device(
+                {
+                    "Heating_Enable": True,
+                    "Mode_Setting_CH": "Auto",
+                }
+            )
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Select new HVAC preset mode."""
@@ -209,6 +218,8 @@ class VaillantClimate(VaillantEntity, ClimateEntity):
 
         _LOGGER.debug("Setting target temperature to: %s", new_temperature)
 
-        await self._client.control_device({
-            "Room_Temperature_Setpoint_Comfort": new_temperature,
-        })
+        await self._client.control_device(
+            {
+                "Room_Temperature_Setpoint_Comfort": new_temperature,
+            }
+        )

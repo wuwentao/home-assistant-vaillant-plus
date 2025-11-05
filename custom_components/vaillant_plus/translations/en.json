@@ -23,5 +23,158 @@
                 "description": "Select the Vaillant device to setup."
             }
         }
+    },
+    "entity": {
+        "binary_sensor": {
+            "circulation": {
+                "name": "Circulation"
+            },
+            "heating_enable": {
+                "name": "Heating Enable"
+            },
+            "enabled_heating": {
+                "name": "Enabled Heating"
+            },
+            "enabled_dhw": {
+                "name": "Enabled DHW"
+            },
+            "bmu_platform": {
+                "name": "BMU Platform"
+            },
+            "ch_weather_compensation": {
+                "name": "CH Weather Compensation"
+            },
+            "warmstar_tank_loading": {
+                "name": "Warmstar Tank Loading"
+            },
+            "ebus_status": {
+                "name": "Ebus Status"
+            },
+            "boiler_heating_demand": {
+                "name": "Boiler Heating Demand"
+            },
+            "boiler_need_refill_water": {
+                "name": "Boiler Need Refill Water"
+            }
+        },
+        "sensor": {
+            "ch_temperature_set_room_comfort": {
+                "name": "CH Temperature Set Room Comfort"
+            },
+            "ch_temperature_set_room_eco": {
+                "name": "CH Temperature Set Room ECO"
+            },
+            "ch_temperature_outdoor": {
+                "name": "CH Temperature Outdoor"
+            },
+            "ch_temperature_room": {
+                "name": "CH Temperature Room"
+            },
+            "ch_temperature_set_lower": {
+                "name": "CH Temperature Set Lower"
+            },
+            "ch_temperature_set_upper": {
+                "name": "CH Temperature Set Upper"
+            },
+            "ch_temperature_flow_set": {
+                "name": "CH Temperature Flow Set"
+            },
+            "temperature_flow_current": {
+                "name": "Temperature Flow Current"
+            },
+            "temperature_flow_return": {
+                "name": "Temperature Flow Return"
+            },
+            "temperature_tank": {
+                "name": "Temperature Tank"
+            },
+            "dhw_temperature_set": {
+                "name": "DHW Temperature Set"
+            },
+            "dhw_temperature_set_lower": {
+                "name": "DHW temperature Set Lower"
+            },
+            "dhw_temperature_set_upper": {
+                "name": "DHW Temperature Set Upper"
+            },
+            "dhw_temperature_set_current": {
+                "name": "DHW Temperature Set Current"
+            },
+            "ch_heating_system_setting": {
+                "name": "CH Heating System Setting",
+                "state": {
+                    "floor_heating": "floor_heating"
+                }
+            },
+            "time_slot_type": {
+                "name": "Time Slot Type",
+                "state": {
+                    "CH": "Central Heating"
+                }
+            },
+            "ch_slot_current": {
+                "name": "CH Slot Current"
+            },
+            "dhw_slot_current": {
+                "name": "DHW Slot Current"
+            },
+            "ch_heating_curve": {
+                "name": "CH Heating Curve"
+            },
+            "dhw_mode_setting": {
+                "name": "DHW Mode Setting",
+                "state": {
+                    "Auto": "Auto",
+                    "Cruising": "Cruising"
+                }
+            },
+            "ch_mode_setting": {
+                "name": "CH Mode Setting",
+                "state": {
+                    "Auto": "Auto",
+                    "Cruising": "Cruising"
+                }
+            },
+            "dhw_function": {
+                "name": "DHW Function"
+            },
+            "ch_max_timeslots": {
+                "name": "CH Max Timeslots"
+            },
+            "dhw_max_timeslots": {
+                "name": "DHW Max Timeslots"
+            },
+            "ch_water_pressure": {
+                "name": "CH Water Pressure"
+            },
+            "reserved_data2": {
+                "name": "Reserved Data2"
+            },
+            "reserved_data3": {
+                "name": "Reserved Data3"
+            },
+            "fault_list": {
+                "name": "Fault List"
+            },
+            "maintenance": {
+                "name": "Maintenance"
+            },
+            "brand": {
+                "name": "Brand"
+            },
+            "dsn": {
+                "name": "DSN"
+            }
+        },
+        "climate": {
+            "heating": {
+                "name": "Central Heating"
+            }
+        },
+        "water_heater": {
+            "dhw": {
+                "name": "Domestic hot water"
+            }
+        }
     }
 }

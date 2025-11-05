@@ -1,4 +1,5 @@
 """The Vaillant Plus climate platform."""
+
 from __future__ import annotations
 
 import logging
@@ -44,9 +45,7 @@ async def async_setup_entry(
     """Set up Vaillant devices from a config entry."""
 
     device_id = entry.data.get(CONF_DID)
-    client: VaillantClient = hass.data[DOMAIN][API_CLIENT][
-        entry.entry_id
-    ]
+    client: VaillantClient = hass.data[DOMAIN][API_CLIENT][entry.entry_id]
 
     added_entities = []
 
@@ -76,6 +75,8 @@ async def async_setup_entry(
 
 class VaillantWaterHeater(VaillantEntity, WaterHeaterEntity):
     """Vaillant vSMART Water Heater."""
+
+    _attr_translation_key = "dhw"
 
     @property
     def should_poll(self) -> bool:
